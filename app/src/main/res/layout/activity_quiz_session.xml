@@ -7,17 +7,41 @@
 
     <LinearLayout
         android:id="@+id/questionsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical"
-        tools:context=".QuizSessionActivity"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".QuizSessionActivity">
 
-<!--        <TextView-->
-<!--            android:id="@+id/testText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="20dp" />-->
+        <TextView
+            android:id="@+id/questionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="73dp" />
+
+        <LinearLayout
+            android:id="@+id/optionsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testText"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="20dp" />-->
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionsContainer"
+        app:layout_constraintVertical_bias="0.784" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

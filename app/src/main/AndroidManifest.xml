@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".QuizSessionActivity"/>
+        <activity android:name=".QuizResultActivity"/>
     </application>
 
 </manifest>
