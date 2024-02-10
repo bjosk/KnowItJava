@@ -11,7 +11,10 @@ public class Quiz implements Serializable {
     private String name;
     private List<Question> questionsOriginal;
     private Queue<Question> questionsQueue;
+    private List<Question> questionsAnsweredWrong = new ArrayList<>();
     private int totalCorrectAnswers = 0;
+
+    private int totalQuestions = 0;
 
     public Quiz() {
 
@@ -21,6 +24,19 @@ public class Quiz implements Serializable {
         this.name = name;
         this.questionsOriginal = questions;
         this.questionsQueue = new LinkedList<>(questions);
+        this.totalQuestions = questionsOriginal.size();
+    }
+
+    public List<Question> getQuestionsAnsweredWrong() {
+        return questionsAnsweredWrong;
+    }
+
+    public void addQuestionsAnsweredWrong(Question question) {
+        questionsAnsweredWrong.add(question);
+    }
+
+    public int getTotalQuestions() {
+        return totalQuestions;
     }
 
     public String getName() {
@@ -77,7 +93,12 @@ public class Quiz implements Serializable {
         boolean isCorrect = question.getAnswerIndex() == answerIndex;
         if (isCorrect && !question.isAnsweredWrong()) {
             totalCorrectAnswers++;
-        } else if (!isCorrect) {
+        } else if (!isCorrect && !question.isAnsweredWrong()) {
+            addQuestionsAnsweredWrong(question);
+            question.setIsAnsweredWrong(true);
+            retryQuestion(question);
+        }
+        else if (!isCorrect) {
             question.setIsAnsweredWrong(true);
             retryQuestion(question); // Re-queue the question if the answer is incorrect
         }
