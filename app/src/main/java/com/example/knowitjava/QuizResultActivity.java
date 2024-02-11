@@ -1,6 +1,7 @@
 package com.example.knowitjava;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 public class QuizResultActivity extends AppCompatActivity {
+    private Quiz quiz;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,8 @@ public class QuizResultActivity extends AppCompatActivity {
         TextView score = findViewById(R.id.score);
 //        LinearLayout wrongQuestion = findViewById(R.id.wrongQuestion);
         Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+        this.quiz = quiz;
+        saveHighScore(quiz.getTotalCorrectAnswers());
 
         score.setText(quiz.getTotalCorrectAnswers() + "/" + quiz.getTotalQuestions());
 //        TextView text = findViewById(R.id.result);
@@ -52,6 +56,18 @@ public class QuizResultActivity extends AppCompatActivity {
 
             wrongQuestionsHolder.addView(questionsText);
 
+        }
+    }
+
+    private void saveHighScore(int finalScore) {
+        SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
+        int highScore = prefs.getInt("highScore_" + quiz.getName() , 0);
+
+        if (finalScore > highScore) {
+            SharedPreferences.Editor editor = prefs.edit();
+            Log.d("QuizResultActivity", "Saving new high score: " + finalScore);
+            editor.putInt("highScore_" + quiz.getName(), finalScore);
+            editor.apply(); // Saves the high score
         }
     }
 }

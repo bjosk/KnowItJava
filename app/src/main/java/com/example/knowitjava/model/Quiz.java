@@ -1,5 +1,7 @@
 package com.example.knowitjava.model;
 
+import android.content.SharedPreferences;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,6 +17,7 @@ public class Quiz implements Serializable {
     private int totalCorrectAnswers = 0;
 
     private int totalQuestions = 0;
+    private int highScore = 0;
 
     public Quiz() {
 
@@ -25,6 +28,10 @@ public class Quiz implements Serializable {
         this.questionsOriginal = questions;
         this.questionsQueue = new LinkedList<>(questions);
         this.totalQuestions = questionsOriginal.size();
+    }
+
+    public int getHighScore() {
+        return highScore;
     }
 
     public List<Question> getQuestionsAnsweredWrong() {
