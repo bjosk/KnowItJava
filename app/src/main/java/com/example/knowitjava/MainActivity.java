@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.knowitjava.model.Question;
 import com.example.knowitjava.model.Quiz;
 import com.example.knowitjava.model.QuizData;
 import com.google.android.material.button.MaterialButton;
@@ -25,16 +24,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         quizContainer = findViewById(R.id.quizContainer);
         setupQuizzesAndScores();
+//        resetAllHighScores();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setupQuizzesAndScores(); // Call this again to refresh scores
+        // Updates the view with new high scores
+        setupQuizzesAndScores();
     }
 
+    // Gets all the available quizzes and its high scores and displays them
     private void setupQuizzesAndScores() {
-        quizContainer.removeAllViews(); // Clear existing views to avoid duplication
+        // Clear existing views to avoid duplication
+        quizContainer.removeAllViews();
+
         ArrayList<Quiz> quizzes = QuizData.getQuizzes();
 
         for (Quiz quiz : quizzes) {
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Creates a button for a quiz and loads the quiz into the next activity if pressed
     private MaterialButton createQuizButton(Quiz quiz) {
         MaterialButton button = new MaterialButton(this);
         button.setText(quiz.getName());
@@ -60,20 +65,23 @@ public class MainActivity extends AppCompatActivity {
         return button;
     }
 
+    // Creates a TextView which displays the high score for a quiz
     private TextView createHighScoreTextView(Quiz quiz) {
         TextView highScore = new TextView(this);
-        highScore.setText("High Score: " + displayHighScore(quiz)); // Modified to include "High Score: "
+        highScore.setText("High Score: " + getHighScore(quiz)); // Modified to include "High Score: "
         highScore.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         return highScore;
     }
 
-    private int displayHighScore(Quiz quiz) {
+    // Retrieves the persisted high score value for a quiz.
+    private int getHighScore(Quiz quiz) {
         SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
         return prefs.getInt("highScore_" + quiz.getName(), 0);
     }
 
+    // Sets the high score values to 0
     private void resetAllHighScores() {
         SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();

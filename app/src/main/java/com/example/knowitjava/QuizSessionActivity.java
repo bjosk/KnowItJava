@@ -40,10 +40,13 @@ public class QuizSessionActivity extends AppCompatActivity {
         displayNextQuestion();
     }
 
+    // Skips the current question without it being registered as answered wrong.
+    // Does not award any points and will not be displayed in the result activity.
     private void skipQuestion() {
         displayNextQuestion();
     }
 
+    // Loads the next question or sends the user to the result activity if the quiz is completed.
     private void displayNextQuestion() {
         Question currentQuestion = quiz.getNextQuestion();
 
@@ -59,6 +62,9 @@ public class QuizSessionActivity extends AppCompatActivity {
         }
     }
 
+    // Displays the next question and creates buttons for the question's options and removes previous options, if any.
+    // If any of the option buttons are pressed the user will be prompted with a new question and options.
+    // Notifies the user whether the question was answered correct or wrong.
     private void updateQuestionAndOptions(Question currentQuestion){
         questionTextView.setText(currentQuestion.getQuestionText());
         optionsContainer.removeAllViews();
@@ -70,7 +76,6 @@ public class QuizSessionActivity extends AppCompatActivity {
             optionButton.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
-//            optionButton.setOnClickListener(v -> displayNextQuestion());
             final int index = i;
             optionButton.setOnClickListener(v -> {
                 if (quiz.verifyAnswer(currentQuestion, index)) {
@@ -84,21 +89,3 @@ public class QuizSessionActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-//            TextView testText = findViewById(R.id.testText);
-//            testText.setText(quiz.getName());
-
-//        for (Question question : quiz.getQuestionsQueue()){
-//            TextView questionTextView = new TextView(this);
-//            questionTextView.setText(question.getQuestionText());
-//            questionTextView.setLayoutParams(new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                    LinearLayout.LayoutParams.WRAP_CONTENT));
-//            questionTextView.setPadding(16, 16, 16, 16);
-//
-//            questionsContainer.addView(questionTextView);
-//        }
-
-        // Use the quiz object to update UI components in this activity

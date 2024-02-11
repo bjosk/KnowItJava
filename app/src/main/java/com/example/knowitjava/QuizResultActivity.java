@@ -25,20 +25,13 @@ public class QuizResultActivity extends AppCompatActivity {
 
         LinearLayout wrongQuestionsHolder = findViewById(R.id.wrongQuestionsHolder);
         TextView score = findViewById(R.id.score);
-//        LinearLayout wrongQuestion = findViewById(R.id.wrongQuestion);
         Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
         this.quiz = quiz;
         saveHighScore(quiz.getTotalCorrectAnswers());
 
         score.setText(quiz.getTotalCorrectAnswers() + "/" + quiz.getTotalQuestions());
-//        TextView text = findViewById(R.id.result);
-//        text.setText("Total correct answers: " + quiz.getTotalCorrectAnswers() + "/" + quiz.getTotalQuestions());
-        List<Question> wrongAnswers = quiz.getQuestionsAnsweredWrong();
 
-        Log.d("QuizResultActivity", "Number of wrong answers: " + wrongAnswers.size());
-        for (Question question : wrongAnswers) {
-            Log.d("QuizResultActivity", "Question: " + question.getQuestionText());
-        }
+        List<Question> wrongAnswers = quiz.getQuestionsAnsweredWrong();
 
         for (Question question : wrongAnswers) {
             TextView questionsText = new TextView(this);
@@ -47,18 +40,12 @@ public class QuizResultActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
-//            TextView answerText = new TextView(this);
-//            answerText.setText(question.getOptions()[question.getAnswerIndex()]);
-//            answerText.setLayoutParams(new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                    LinearLayout.LayoutParams.WRAP_CONTENT));
-
-
             wrongQuestionsHolder.addView(questionsText);
 
         }
     }
 
+    // Checks if the score is higher than the current high score and updates the persisted value if it is higher.
     private void saveHighScore(int finalScore) {
         SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
         int highScore = prefs.getInt("highScore_" + quiz.getName() , 0);
