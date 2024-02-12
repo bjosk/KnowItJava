@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -53,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
     // Creates a button for a quiz and loads the quiz into the next activity if pressed
     private MaterialButton createQuizButton(Quiz quiz) {
         MaterialButton button = new MaterialButton(this);
+
+        button.setBackgroundColor(getColor(R.color.primaryContainer));
         button.setText(quiz.getName());
+        button.setTextColor(getColor(R.color.onPrimaryContainer));
+
         button.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
