@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.knowitjava.model.Quiz;
 import com.example.knowitjava.model.QuizData;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
@@ -55,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton createQuizButton(Quiz quiz) {
         MaterialButton button = new MaterialButton(this);
 
-        button.setBackgroundColor(getColor(R.color.primaryContainer));
         button.setText(quiz.getName());
-        button.setTextColor(getColor(R.color.onPrimaryContainer));
+        button.setCornerRadius(16);
 
         button.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
