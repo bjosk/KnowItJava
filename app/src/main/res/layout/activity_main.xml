@@ -12,35 +12,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="32dp"
-        android:layout_marginTop="16dp"
         android:text="Know It?!"
+        android:textAppearance="?attr/textAppearanceDisplayLarge"
         android:textColor="@color/primary"
         android:textSize="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
         style="?attr/materialCardViewFilledStyle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/quizContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/logo"
-            app:layout_constraintVertical_bias="0.387"
-            tools:layout_editor_absoluteX="190dp" />
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="32dp"
+          android:layout_marginTop="32dp">
+
+          <com.google.android.material.textview.MaterialTextView
+              android:id="@+id/chooseQuiz"
+              style="?attr/colorOnPrimaryContainer"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="32dp"
+              android:text="@string/chooseQuiz"
+              android:textAlignment="center"
+              android:textAppearance="?attr/textAppearanceTitleLarge"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+          <LinearLayout
+              android:id="@+id/quizContainer"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="16dp"
+              android:orientation="vertical"
+              app:layout_constraintTop_toBottomOf="@id/chooseQuiz">
+          </LinearLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

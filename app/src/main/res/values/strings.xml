@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KnowItJava</string>
+    <string name="chooseQuiz">Choose a quiz!</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.knowitjava.model.Question;
 import com.example.knowitjava.model.Quiz;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 
 import org.w3c.dom.Text;
 
@@ -19,7 +20,7 @@ public class QuizSessionActivity extends AppCompatActivity {
 
     private Quiz quiz;
     private TextView questionTextView;
-    private LinearLayout questionsContainer;
+    private MaterialCardView questionsContainer;
     private LinearLayout optionsContainer;
     private MaterialButton skipButton;
 

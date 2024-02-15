@@ -13,6 +13,7 @@ import com.example.knowitjava.model.Quiz;
 import com.example.knowitjava.model.QuizData;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.resources.TextAppearance;
 
 import java.util.ArrayList;
 
@@ -45,19 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
         for (Quiz quiz : quizzes) {
             MaterialButton quizButton = createQuizButton(quiz);
-            TextView highScoreTextView = createHighScoreTextView(quiz);
+//            TextView highScoreTextView = createHighScoreTextView(quiz);
 
             quizContainer.addView(quizButton);
-            quizContainer.addView(highScoreTextView);
+//            quizContainer.addView(highScoreTextView);
         }
     }
 
     // Creates a button for a quiz and loads the quiz into the next activity if pressed
     private MaterialButton createQuizButton(Quiz quiz) {
         MaterialButton button = new MaterialButton(this);
+        button.setBackgroundColor(getColor(com.google.android.material.R.color.m3_sys_color_light_primary));
 
-        button.setText(quiz.getName());
-        button.setCornerRadius(16);
+        button.setText(quiz.getName() + "\nBest: " + getHighScore(quiz) + "/" + quiz.getTotalQuestions());
+
+//        button.setCornerRadius(16);
+        button.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleMedium);
+        button.setTextColor(getColor(com.google.android.material.R.color.m3_sys_color_light_on_primary));
 
         button.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -71,14 +76,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Creates a TextView which displays the high score for a quiz
-    private TextView createHighScoreTextView(Quiz quiz) {
-        TextView highScore = new TextView(this);
-        highScore.setText("High Score: " + getHighScore(quiz)); // Modified to include "High Score: "
-        highScore.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        return highScore;
-    }
+//    private TextView createHighScoreTextView(Quiz quiz) {
+//        TextView highScore = new TextView(this);
+//        highScore.setText("High Score: " + getHighScore(quiz)); // Modified to include "High Score: "
+//        highScore.setLayoutParams(new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.WRAP_CONTENT));
+//        return highScore;
+//    }
 
     // Retrieves the persisted high score value for a quiz.
     private int getHighScore(Quiz quiz) {
