@@ -15,7 +15,6 @@
         android:text="Know It?!"
         android:textAppearance="?attr/textAppearanceDisplayLarge"
         android:textColor="@color/primary"
-        android:textSize="60dp"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
