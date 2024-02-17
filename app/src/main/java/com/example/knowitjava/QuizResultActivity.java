@@ -77,16 +77,6 @@ public class QuizResultActivity extends AppCompatActivity {
 
                 cardContent.addView(correctAnswer);
             }
-
-//            for (Question question : wrongAnswers) {
-//                TextView questionsText = new TextView(this);
-//                questionsText.setText(question.getQuestionText() + " Correct answer is: " + question.getOptions()[question.getAnswerIndex()]);
-//                questionsText.setLayoutParams(new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.MATCH_PARENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT));
-//
-//                wrongQuestionsHolder.addView(questionsText);
-//            }
         } else {
             resultCard.removeAllViews();
         }

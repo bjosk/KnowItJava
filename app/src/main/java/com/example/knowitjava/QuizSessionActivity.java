@@ -2,7 +2,7 @@ package com.example.knowitjava;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,15 +14,13 @@ import com.example.knowitjava.model.Quiz;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
-import org.w3c.dom.Text;
-
 public class QuizSessionActivity extends AppCompatActivity {
 
     private Quiz quiz;
     private TextView questionTextView;
     private MaterialCardView questionsContainer;
     private LinearLayout optionsContainer;
-    private MaterialButton skipButton;
+    private MaterialButton skipOrNextOrCompleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +32,27 @@ public class QuizSessionActivity extends AppCompatActivity {
         questionTextView = findViewById(R.id.questionTextView);
         questionsContainer = findViewById(R.id.questionsContainer);
         optionsContainer = findViewById(R.id.optionsContainer);
-        skipButton = findViewById(R.id.skipButton);
+        skipOrNextOrCompleteButton = findViewById(R.id.skipButton);
 
-        skipButton.setOnClickListener(v -> skipQuestion());
+        skipOrNextOrCompleteButton.setOnClickListener(v -> displayNextQuestion());
 
         displayNextQuestion();
     }
 
     // Skips the current question without it being registered as answered wrong.
     // Does not award any points and will not be displayed in the result activity.
-    private void skipQuestion() {
-        displayNextQuestion();
-    }
+
+
 
     // Loads the next question or sends the user to the result activity if the quiz is completed.
     private void displayNextQuestion() {
         Question currentQuestion = quiz.getNextQuestion();
 
-        if (currentQuestion != null) {
+        if (currentQuestion != null && quiz.getQuestionsQueue().isEmpty()) {
+            skipOrNextOrCompleteButton.setText("Skip and complete");
+            updateQuestionAndOptions(currentQuestion);
+        } else if(currentQuestion != null) {
+            skipOrNextOrCompleteButton.setText("skip");
             updateQuestionAndOptions(currentQuestion);
         } else if (quiz.isQuizComplete()) {
             Toast.makeText(this, "Quiz completed!", Toast.LENGTH_SHORT).show();
@@ -81,10 +82,24 @@ public class QuizSessionActivity extends AppCompatActivity {
             optionButton.setOnClickListener(v -> {
                 if (quiz.verifyAnswer(currentQuestion, index)) {
                     Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+                    v.setBackgroundColor(getColor(R.color.success));
                 } else {
                     Toast.makeText(this, "Incorrect.", Toast.LENGTH_SHORT).show();
+                    v.setBackgroundColor(getColor(R.color.error));
                 }
-                displayNextQuestion();
+
+                if (quiz.isQuizComplete()) {
+                    skipOrNextOrCompleteButton.setText("Complete");
+                } else {
+                    skipOrNextOrCompleteButton.setText("Next question");
+                }
+
+                //Disable the buttons after an options has been pressed.
+                for (int j = 0; j < optionsContainer.getChildCount(); j++) {
+                    View child = optionsContainer.getChildAt(j);
+                    child.setEnabled(false);
+                }
+//                displayNextQuestion();
             });
             optionsContainer.addView(optionButton);
         }

@@ -7,5 +7,7 @@
     <color name="outline_variant">#CAC4D0</color>
     <color name="onPrimaryContainer">#21005D</color>
     <color name="primaryContainer">#EADDFF</color>
+    <color name="success">#FF8BC34A</color>
+    <color name="error">#FF5722</color>
 
 </resources>

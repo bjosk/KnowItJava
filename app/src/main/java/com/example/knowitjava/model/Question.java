@@ -8,6 +8,7 @@ public class Question implements Serializable {
     private String[] options;
     private int answerIndex;
     private boolean isAnsweredWrong = false;
+    private boolean isAnswered = false;
     public Question() {
 
     }
@@ -16,6 +17,14 @@ public class Question implements Serializable {
         this.questionText = questionText;
         this.options = options;
         this.answerIndex = answerIndex;
+    }
+
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+
+    public void setAnswered(boolean answered) {
+        isAnswered = answered;
     }
 
     public boolean isAnsweredWrong() {
