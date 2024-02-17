@@ -19,6 +19,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/questionsContainer"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
 <!--    <LinearLayout-->
 <!--        android:id="@+id/questionsContainer"-->
 <!--        android:layout_width="0dp"-->

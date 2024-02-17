@@ -13,6 +13,7 @@ import com.example.knowitjava.model.Question;
 import com.example.knowitjava.model.Quiz;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 public class QuizSessionActivity extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class QuizSessionActivity extends AppCompatActivity {
     private MaterialCardView questionsContainer;
     private LinearLayout optionsContainer;
     private MaterialButton skipOrNextOrCompleteButton;
+    private LinearProgressIndicator progressIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class QuizSessionActivity extends AppCompatActivity {
         questionsContainer = findViewById(R.id.questionsContainer);
         optionsContainer = findViewById(R.id.optionsContainer);
         skipOrNextOrCompleteButton = findViewById(R.id.skipButton);
+        progressIndicator = findViewById(R.id.progressIndicator);
 
         skipOrNextOrCompleteButton.setOnClickListener(v -> displayNextQuestion());
 
@@ -46,6 +49,9 @@ public class QuizSessionActivity extends AppCompatActivity {
 
     // Loads the next question or sends the user to the result activity if the quiz is completed.
     private void displayNextQuestion() {
+
+        updateProgressIndicator();
+
         Question currentQuestion = quiz.getNextQuestion();
 
         if (currentQuestion != null && quiz.getQuestionsQueue().isEmpty()) {
@@ -55,8 +61,8 @@ public class QuizSessionActivity extends AppCompatActivity {
             skipOrNextOrCompleteButton.setText("skip");
             updateQuestionAndOptions(currentQuestion);
         } else if (quiz.isQuizComplete()) {
-            Toast.makeText(this, "Quiz completed!", Toast.LENGTH_SHORT).show();
-//              THE CODE BELOW EITHER CRASHES THE APP OR RESTARTS THE FIRST ACTIVITY
+//            Toast.makeText(this, "Quiz completed!", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(QuizSessionActivity.this, QuizResultActivity.class);
             intent.putExtra("quiz", quiz); // Assuming Quiz implements Serializable
             startActivity(intent);
@@ -81,10 +87,10 @@ public class QuizSessionActivity extends AppCompatActivity {
             final int index = i;
             optionButton.setOnClickListener(v -> {
                 if (quiz.verifyAnswer(currentQuestion, index)) {
-                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
                     v.setBackgroundColor(getColor(R.color.success));
                 } else {
-                    Toast.makeText(this, "Incorrect.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Incorrect.", Toast.LENGTH_SHORT).show();
                     v.setBackgroundColor(getColor(R.color.error));
                 }
 
@@ -103,5 +109,17 @@ public class QuizSessionActivity extends AppCompatActivity {
             });
             optionsContainer.addView(optionButton);
         }
+    }
+
+    //Updates the progress indicator. Displays how far the user has gotten in the quiz.
+    // Incorrect answers will not affect this as these questions are put back in the question queue.
+    private void updateProgressIndicator() {
+        int totalQuestions = quiz.getTotalQuestions();
+        int questionsLeft = quiz.getQuestionsQueue().size();
+        int questionsAnswered = totalQuestions - questionsLeft;
+
+        // Calculate progress as a percentage
+        float progress = ((float) (totalQuestions - questionsLeft) / totalQuestions) * 100;
+        progressIndicator.setProgress((int) progress);
     }
 }
