@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,7 +13,7 @@ public class Quiz implements Serializable {
 
     private String name;
     private List<Question> questionsOriginal;
-    private Queue<Question> questionsQueue;
+    private Deque<Question> questionsQueue;
     private List<Question> questionsAnsweredWrong = new ArrayList<>();
     private int totalCorrectAnswers = 0;
 
@@ -62,11 +63,11 @@ public class Quiz implements Serializable {
         this.questionsOriginal = questionsOriginal;
     }
 
-    public Queue<Question> getQuestionsQueue() {
+    public Deque<Question> getQuestionsQueue() {
         return questionsQueue;
     }
 
-    public void setQuestionsQueue(Queue<Question> questionsQueue) {
+    public void setQuestionsQueue(Deque<Question> questionsQueue) {
         this.questionsQueue = questionsQueue;
     }
 
@@ -82,9 +83,6 @@ public class Quiz implements Serializable {
         return questionsQueue.poll();
     }
 
-//    public void skipQuestion() {
-//        questionsQueue.remove();
-//    }
 
     public void retryQuestion(Question question) {
         if (!questionsQueue.contains(question)){
