@@ -31,27 +31,52 @@ public class QuizTest {
 
     @Test
     public void testGetNextQuestion_ReturnsQuestion() {
+        setUp();
         Question question = quiz.getNextQuestion();
 
         assertEquals("What is a variable in programming?", question.getQuestionText());
     }
-//    @Test
-//    public void getNextQuestion() {
-//        assert
-//    }
 
     @Test
     public void retryQuestion_AddsQuestionToQueueAgain() {
+        setUp();
         Question question = quiz.getNextQuestion();
         quiz.retryQuestion(question);
+
         assertEquals(question.getQuestionText(), quiz.getQuestionsQueue().getLast().getQuestionText());
     }
 
     @Test
-    public void isQuizComplete() {
+    public void isQuizComplete_AfterAllQuestionsAnswered() {
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+        quiz.getNextQuestion();
+
+        assertEquals(true, quiz.isQuizComplete());
     }
 
     @Test
-    public void verifyAnswer() {
+    public void verifyAnswer_CorrectAnswer() {
+        Question question = quiz.getNextQuestion();
+        int correctIndex = question.getAnswerIndex();
+
+        assertTrue("Should be verified as correct", quiz.verifyAnswer(question, correctIndex));
+
+    }
+
+    @Test
+    public void verifyAnswer_IncorrectAnswer() {
+        Question question = quiz.getNextQuestion();
+        int correctIndex = question.getAnswerIndex();
+
+        assertFalse("Should be verified as incorrect", quiz.verifyAnswer(question, 0));
+
     }
 }
