@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //        button.setCornerRadius(16);
         button.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleMedium);
         button.setTextColor(getColor(com.google.android.material.R.color.m3_sys_color_light_on_primary));
+        button.setLineSpacing(0f, 1.25f);
 
         button.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
