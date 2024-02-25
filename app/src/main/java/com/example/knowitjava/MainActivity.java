@@ -17,16 +17,17 @@ import com.google.android.material.resources.TextAppearance;
 
 import java.util.ArrayList;
 
+// Displays a list of quizzes available for the user
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout quizContainer;
+    private LinearLayout quizContainer; // Container for the dynamically created buttons
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        quizContainer = findViewById(R.id.quizContainer);
-        setupQuizzesAndScores();
+        setContentView(R.layout.activity_main); // Set up the user interface
+        quizContainer = findViewById(R.id.quizContainer); // Initialize the container
+        setupQuizzesAndScores(); // Set up and display the buttons and high scores
 //        resetAllHighScores();
     }
 
@@ -44,23 +45,26 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Quiz> quizzes = QuizData.getQuizzes();
 
+        //Creates a button for each quiz and adds it to the container
         for (Quiz quiz : quizzes) {
             MaterialButton quizButton = createQuizButton(quiz);
-//            TextView highScoreTextView = createHighScoreTextView(quiz);
 
             quizContainer.addView(quizButton);
-//            quizContainer.addView(highScoreTextView);
         }
     }
 
-    // Creates a button for a quiz and loads the quiz into the next activity if pressed
+    /**
+     * Creates a fully configured and functional button for a quiz.
+     * @param quiz The quiz in which the button is created for
+     * @return A fully configured MaterialButton
+     */
+
     private MaterialButton createQuizButton(Quiz quiz) {
         MaterialButton button = new MaterialButton(this);
         button.setBackgroundColor(getColor(com.google.android.material.R.color.m3_sys_color_light_primary));
 
         button.setText(quiz.getName() + "\nBest: " + getHighScore(quiz) + "/" + quiz.getTotalQuestions());
 
-//        button.setCornerRadius(16);
         button.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleMedium);
         button.setTextColor(getColor(com.google.android.material.R.color.m3_sys_color_light_on_primary));
         button.setLineSpacing(0f, 1.25f);
@@ -68,25 +72,20 @@ public class MainActivity extends AppCompatActivity {
         button.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
+        // Loads the quiz into the next activity if pressed
         button.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, QuizSessionActivity.class);
-            intent.putExtra("quiz", quiz); // Assuming Quiz implements Serializable
+            intent.putExtra("quiz", quiz);
             startActivity(intent);
         });
         return button;
     }
 
-    // Creates a TextView which displays the high score for a quiz
-//    private TextView createHighScoreTextView(Quiz quiz) {
-//        TextView highScore = new TextView(this);
-//        highScore.setText("High Score: " + getHighScore(quiz)); // Modified to include "High Score: "
-//        highScore.setLayoutParams(new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.MATCH_PARENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT));
-//        return highScore;
-//    }
-
-    // Retrieves the persisted high score value for a quiz.
+    /**
+     * Retrieves the persisted high score value for a quiz.
+     * @param quiz The quiz in which the high score is retrieved from
+     * @return The high score as an integer
+     */
     private int getHighScore(Quiz quiz) {
         SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
         return prefs.getInt("highScore_" + quiz.getName(), 0);

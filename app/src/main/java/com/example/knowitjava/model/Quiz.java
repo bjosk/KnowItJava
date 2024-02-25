@@ -84,28 +84,45 @@ public class Quiz implements Serializable {
     }
 
 
+    /**
+     * Reschedules a question
+     * @param question Incorrectly answered question
+     */
     public void retryQuestion(Question question) {
         if (!questionsQueue.contains(question)){
             questionsQueue.offer(question);
         }
     }
 
+    /**
+     * Checks if the quiz is completed
+     * @return True if completed, false if there are questions left
+     */
     public boolean isQuizComplete() {
         return questionsQueue.isEmpty();
     }
 
+    /**
+     * Verifies the answer of a question and updates the quiz state
+     * @param question The answered question
+     * @param answerIndex The index of the selected answer option
+     * @return true or false indicating correct or incorrect answer
+     */
     public boolean verifyAnswer(Question question, int answerIndex) {
         boolean isCorrect = question.getAnswerIndex() == answerIndex;
+
         if (isCorrect && !question.isAnsweredWrong()) {
-            totalCorrectAnswers++;
+            totalCorrectAnswers++; // Increases the score by one if answered correct
         } else if (!isCorrect && !question.isAnsweredWrong()) {
+            // Reschedules incorrectly answered questions and adds them to a list of questions
             addQuestionsAnsweredWrong(question);
             question.setIsAnsweredWrong(true);
             retryQuestion(question);
         }
         else if (!isCorrect) {
+            // If already answered wrong once the question will not be added to the list
             question.setIsAnsweredWrong(true);
-            retryQuestion(question); // Re-queue the question if the answer is incorrect
+            retryQuestion(question); // Reschedule the question if the answer is incorrect
         }
         return isCorrect;
     }
